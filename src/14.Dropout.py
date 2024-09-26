@@ -1,6 +1,9 @@
 import numpy as np
 
 
+# 公式:
+#   train:  output = input * (mask / (1 - p))
+#   test:   output = input
 class Dropout:
     def __init__(self, p):
         self.p = p
@@ -13,7 +16,7 @@ class Dropout:
             return input
         self.mask = np.random.choice([0, 1], size=input.shape, p=[1-self.p, self.p])
 
-        return self.mask * input
+        return self.mask * input / (1 - self.p)
     
     def backward(self, d_out):
 
